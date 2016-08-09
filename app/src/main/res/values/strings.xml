@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">NavigationDrawerV2</string>
-    <string name="drawer_open">open drawer</string>
-    <string name="drawer_close">close drawer</string>
     <string name="action_autorenew">Update</string>
     <string name="action_settings">Setting</string>
     <string name="_1_day">1 day</string>

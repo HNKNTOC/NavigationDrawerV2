@@ -23,27 +23,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setting() {
-        Toolbar toolbar = getToolbar();
-        settingForDrawerLayout((DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+        getToolbar();
+        settingForDrawerLayout((DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-    private Toolbar getToolbar() {
+    private void getToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
-        return toolbar;
     }
 
-    private void settingForDrawerLayout(DrawerLayout drawerLayout, Toolbar myToolbar) {
+    private void settingForDrawerLayout(DrawerLayout drawerLayout) {
         drawerLayout.addDrawerListener(new MyDrawerListener());
         setTitle(R.string.schedule);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                drawerLayout,         /* DrawerLayout object */
-                myToolbar,                    /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        );
-        drawerLayout.addDrawerListener(mDrawerToggle);
     }
 
     @Override
