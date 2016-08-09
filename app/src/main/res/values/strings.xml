@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NavigationDrawerV2</string>
+    <string name="drawer_open">open drawer</string>
+    <string name="drawer_close">close drawer</string>
+    <string name="action_autorenew">Обновить</string>
+    <string name="action_settings">Настройки</string>
 </resources>
