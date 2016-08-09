@@ -4,9 +4,11 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!-- The main content view -->
+
+    <!-- The menu content view -->
     <include layout="@layout/action_bar" />
     <!-- The navigation drawer -->
+
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingForDrawerLayout(DrawerLayout drawerLayout, Toolbar myToolbar) {
         drawerLayout.addDrawerListener(new MyDrawerListener());
-
+        setTitle(R.string.schedule);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 drawerLayout,         /* DrawerLayout object */
@@ -48,8 +49,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.item_day_1) {
+            Log.i(TAG, "select Day 1");
+            return true;
+        }
+        if (item.getItemId() == R.id.item_day_3) {
+            Log.i(TAG, "select Day 3");
+            return true;
+        }
+        if (item.getItemId() == R.id.item_day_7) {
+            Log.i(TAG, "select Day 7");
+            return true;
+        }
+        if (item.getItemId() == R.id.item_settings) {
+            Log.i(TAG, "select item_settings");
+            return true;
+        }
+        Log.w(TAG, "Not select item menu ActionBar!");
+        return false;
     }
 
     /**
