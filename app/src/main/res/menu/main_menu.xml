@@ -16,7 +16,7 @@
         android:title="@string/_7_day"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/item_settings"
+        android:id="@+id/item_setting"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
 

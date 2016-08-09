@@ -1,8 +1,8 @@
 package com.hnkntoc.navigationdrawerv2;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,26 +13,43 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
-    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         setting();
     }
 
     private void setting() {
-        getToolbar();
-        settingForDrawerLayout((DrawerLayout) findViewById(R.id.drawer_layout));
+        settingToolbar();
+        settingFloatingActionButton();
+        settingForDrawerLayout();
     }
 
-    private void getToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+    private void settingFloatingActionButton() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick FloatingActionButton.");
+            }
+        });
+    }
+
+    private void settingToolbar() {
+        toolbar.setLogo(R.drawable.ic_autorenew_black_24dp);
         setSupportActionBar(toolbar);
     }
 
-    private void settingForDrawerLayout(DrawerLayout drawerLayout) {
+    private void settingForDrawerLayout() {
         drawerLayout.addDrawerListener(new MyDrawerListener());
         setTitle(R.string.schedule);
     }
@@ -47,19 +64,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.item_day_1) {
-            Log.i(TAG, "select Day 1");
+            Log.d(TAG, "select Day 1");
             return true;
         }
         if (item.getItemId() == R.id.item_day_3) {
-            Log.i(TAG, "select Day 3");
+            Log.d(TAG, "select Day 3");
             return true;
         }
         if (item.getItemId() == R.id.item_day_7) {
-            Log.i(TAG, "select Day 7");
+            Log.d(TAG, "select Day 7");
             return true;
         }
-        if (item.getItemId() == R.id.item_settings) {
-            Log.i(TAG, "select item_settings");
+        if (item.getItemId() == R.id.item_setting) {
+            Log.d(TAG, "select setting");
             return true;
         }
         Log.w(TAG, "Not select item menu ActionBar!");
