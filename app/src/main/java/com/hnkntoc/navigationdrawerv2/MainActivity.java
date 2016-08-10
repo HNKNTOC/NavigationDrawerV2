@@ -3,6 +3,7 @@ package com.hnkntoc.navigationdrawerv2;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private TabLayout tabLayout;
+    private ViewPager viewPager;
 
 
     @Override
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -40,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
         settingDrawerLayout();
         settingToolbar();
         settingTabLayout();
+        settingViewPager();
+    }
+
+    private void settingViewPager() {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new MyFragment(), "List");
+        adapter.addFragment(new MyFragment(), "Tile");
+        adapter.addFragment(new MyFragment(), "Card");
+        viewPager.setAdapter(adapter);
     }
 
     private void settingTabLayout() {
