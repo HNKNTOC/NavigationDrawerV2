@@ -2,6 +2,7 @@ package com.hnkntoc.navigationdrawerv2;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private FloatingActionButton fab;
     private Toolbar toolbar;
+    private TabLayout tabLayout;
 
 
     @Override
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         setSupportActionBar(toolbar);
 
@@ -36,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
         settingFloatingActionButton();
         settingDrawerLayout();
         settingToolbar();
+        settingTabLayout();
+    }
+
+    private void settingTabLayout() {
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
     }
 
     private void settingToolbar() {
