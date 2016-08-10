@@ -3,7 +3,15 @@
     <group android:checkableBehavior="single">
         <item
             android:icon="@drawable/ic_schedule_black_24dp"
-            android:tint="@color/colorAccent"
             android:title="@string/schedule" />
+        <item
+            android:icon="@drawable/ic_build_black_24dp"
+            android:title="@string/schedule_setting" />
     </group>
+    <item android:title="@string/other">
+        <menu>
+            <item android:title="@string/setting" />
+            <item android:title="@string/about_program" />
+        </menu>
+    </item>
 </menu>
