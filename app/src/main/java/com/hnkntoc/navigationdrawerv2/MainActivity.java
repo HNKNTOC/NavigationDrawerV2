@@ -77,35 +77,6 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.schedule);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.item_day_1) {
-            Log.d(TAG, "select Day 1");
-            return true;
-        }
-        if (item.getItemId() == R.id.item_day_3) {
-            Log.d(TAG, "select Day 3");
-            return true;
-        }
-        if (item.getItemId() == R.id.item_day_7) {
-            Log.d(TAG, "select Day 7");
-            return true;
-        }
-        if (item.getItemId() == R.id.item_setting) {
-            Log.d(TAG, "select setting");
-            return true;
-        }
-        Log.w(TAG, "Not select item menu ActionBar!");
-        return false;
-    }
-
     /**
      * Слушатель для открытия и закрытия меню.
      */
