@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingViewPager() {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new MyFragment(), "List");
-        adapter.addFragment(new MyFragment(), "Tile");
-        adapter.addFragment(new MyFragment(), "Card");
+        adapter.addFragment(new MyFragment(), getString(R.string._1_day));
+        adapter.addFragment(new MyFragment(), getString(R.string._3_day));
+        adapter.addFragment(new MyFragment(), getString(R.string._7_day));
         viewPager.setAdapter(adapter);
     }
 
