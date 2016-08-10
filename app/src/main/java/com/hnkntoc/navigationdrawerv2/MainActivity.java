@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingToolbar() {
         toolbar.setLogo(R.drawable.ic_autorenew_black_24dp);
-        setSupportActionBar(toolbar);
     }
 
     private void settingForDrawerLayout() {
