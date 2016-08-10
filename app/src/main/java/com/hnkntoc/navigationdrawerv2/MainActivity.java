@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
     private DrawerLayout drawerLayout;
     private FloatingActionButton fab;
+    private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +25,21 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
 
         setting();
     }
 
     private void setting() {
         settingFloatingActionButton();
-        settingForDrawerLayout();
+        settingDrawerLayout();
+        settingToolbar();
+    }
+
+    private void settingToolbar() {
+
     }
 
     private void settingFloatingActionButton() {
@@ -42,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void settingForDrawerLayout() {
+    private void settingDrawerLayout() {
         drawerLayout.addDrawerListener(new MyDrawerListener());
         setTitle(R.string.schedule);
     }
