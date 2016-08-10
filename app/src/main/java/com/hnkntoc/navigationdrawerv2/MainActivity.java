@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
     private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
     private FloatingActionButton fab;
 
     @Override
@@ -23,14 +22,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         setting();
     }
 
     private void setting() {
-        settingToolbar();
         settingFloatingActionButton();
         settingForDrawerLayout();
     }
@@ -44,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void settingToolbar() {
-        toolbar.setLogo(R.drawable.ic_autorenew_black_24dp);
-    }
 
     private void settingForDrawerLayout() {
         drawerLayout.addDrawerListener(new MyDrawerListener());
