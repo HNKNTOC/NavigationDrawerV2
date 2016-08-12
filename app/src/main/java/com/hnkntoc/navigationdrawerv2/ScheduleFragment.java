@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Фрагмент отображаем список пар.
  */
-public class MyFragment extends Fragment {
+public class ScheduleFragment extends Fragment {
 
 
-    public MyFragment() {
+    public ScheduleFragment() {
         // Required empty public constructor
     }
 
