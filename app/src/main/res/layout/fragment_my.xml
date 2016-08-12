@@ -4,16 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:focusable="false"
-    android:fillViewport="false">
+    android:fillViewport="false"
+    android:paddingBottom="50dp">
 
     <LinearLayout
         android:id="@+id/liner_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:baselineAligned="false"
-        android:focusable="false">
+        android:padding="10dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/cv_IdNumber0"
@@ -33,13 +32,10 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_margin="5dp"
-                    android:contentDescription="Geometry"
-                    android:longClickable="false"
                     android:maxHeight="60dp"
                     android:maxWidth="70dp"
                     android:minHeight="70dp"
                     android:minWidth="80dp"
-                    android:nestedScrollingEnabled="true"
                     android:src="@drawable/geometry" />
 
                 <TextView
@@ -347,8 +343,5 @@
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
-
-
-
     </LinearLayout>
 </ScrollView>

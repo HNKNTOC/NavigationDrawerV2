@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 
 /**
@@ -23,7 +24,13 @@ public class ScheduleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my, container, false);
+        View view = inflater.inflate(R.layout.fragment_my, container, false);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.liner_layout);
+        CardViewFactory cardViewFactory = new CardViewFactory(getActivity());
+        for (int i = 0; i < 20; i++) {
+            linearLayout.addView(cardViewFactory.getCardView());
+        }
+        return view;
     }
 
 }
