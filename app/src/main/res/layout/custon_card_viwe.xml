@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_IdNumber0"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/card_image_IdNumber0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:maxHeight="60dp"
+            android:maxWidth="70dp"
+            android:minHeight="70dp"
+            android:minWidth="80dp"
+            android:src="@drawable/geometry" />
+
+        <TextView
+            android:id="@+id/card_name_IdNumber0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/card_image_IdNumber0"
+            android:layout_toLeftOf="@+id/card_inage_numerator_IdNumber0"
+            android:layout_toRightOf="@+id/card_image_IdNumber0"
+            android:text="Null name lesson"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/card_time_1_IdNumber0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/card_name_IdNumber0"
+            android:layout_below="@+id/card_name_IdNumber0"
+
+            android:text="12:30 - 13:00" />
+
+        <TextView
+            android:id="@+id/card_time_2_IdNumber0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/card_time_1_IdNumber0"
+            android:layout_below="@+id/card_time_1_IdNumber0"
+            android:text="13:20 - 14:00" />
+
+        <ImageView
+            android:id="@+id/card_inage_numerator_IdNumber0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_looks_two_black_24dp" />
+
+        <TextView
+            android:id="@+id/card_description_IdNumber0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="true"
+            android:layout_alignWithParentIfMissing="false"
+
+            android:layout_below="@+id/card_name_IdNumber0"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/card_time_1_IdNumber0"
+            android:longClickable="true"
+            android:text="Null description"
+            android:typeface="serif" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
