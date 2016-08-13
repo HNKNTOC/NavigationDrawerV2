@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         setSupportActionBar(toolbar);
+        setTitle(R.string.schedule);
 
         setting();
     }
@@ -39,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     private void setting() {
         settingFloatingActionButton();
         settingDrawerLayout();
-        settingToolbar();
         settingTabLayout();
         settingViewPager();
     }
@@ -56,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void settingToolbar() {
-
-    }
-
     private void settingFloatingActionButton() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingDrawerLayout() {
         drawerLayout.addDrawerListener(new MyDrawerListener());
-        setTitle(R.string.schedule);
     }
 
     /**

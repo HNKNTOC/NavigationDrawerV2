@@ -25,11 +25,6 @@ public class ScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my, container, false);
-        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.liner_layout);
-        CardViewFactory cardViewFactory = new CardViewFactory(getActivity());
-        for (int i = 0; i < 20; i++) {
-            linearLayout.addView(cardViewFactory.getCardView());
-        }
         return view;
     }
 
