@@ -3,17 +3,30 @@ package com.hnkntoc.navigationdrawerv2;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.parsingHTML.logic.ParsingHTML;
+import com.parsingHTML.logic.element.DayName;
+import com.parsingHTML.logic.extractor.xml.ExtractorSchedule;
+import com.parsingHTML.logic.extractor.xml.Lesson;
+
+import org.w3c.dom.Document;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 
 /**
  * Фрагмент отображаем список пар.
  */
 public class ScheduleFragment extends Fragment {
+    private static final String TAG = MainActivity.class.getName();
 
 
     public ScheduleFragment() {
@@ -29,12 +42,29 @@ public class ScheduleFragment extends Fragment {
         LayoutInflater ltInflater = getLayoutInflater(savedInstanceState);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.liner_layout);
 
-        linearLayout.addView(addNewCard(inflater,linearLayout,"Матиматика 1","Пара 1"));
-        linearLayout.addView(addNewCard(inflater,linearLayout,"Ин. яз 2","Пара 2"));
-        linearLayout.addView(addNewCard(inflater,linearLayout,"История 3","Пара 3"));
-        linearLayout.addView(addNewCard(inflater,linearLayout,"Физра 4","Пара 4"));
+        InputStream inputStream1 = getResources().openRawResource(R.raw.raspbukepru);
+        InputStream inputStream2 = getResources().openRawResource(R.raw.raspbukepru2);
+
+        ArrayList<Lesson> lessonList = getLesson(inputStream1, inputStream2);
+
+        for (Lesson lesson : lessonList) {
+            Log.i(TAG,"Add lesson "+lesson);
+            linearLayout.addView(addNewCard(inflater,linearLayout,lesson.getName(),lesson.getDescription()));
+        }
 
         return view;
+    }
+
+    private ArrayList<Lesson> getLesson(InputStream inputStream1, InputStream inputStream2)  {
+        try {
+            Document doc = ParsingHTML.transformation(
+                    ParsingHTML.parsingSchedule(inputStream1, inputStream2, "UTF-8"));
+            ExtractorSchedule extractorSchedule = new ExtractorSchedule(doc);
+            return extractorSchedule.extractLessonWhitTime(DayName.WEDNESDAY);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public View addNewCard(LayoutInflater layoutInflater, ViewGroup root, String name, String description){
