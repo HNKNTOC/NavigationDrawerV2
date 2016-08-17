@@ -49,7 +49,8 @@ public class ScheduleFragment extends Fragment {
 
         for (Lesson lesson : lessonList) {
             Log.i(TAG,"Add lesson "+lesson);
-            linearLayout.addView(addNewCard(inflater,linearLayout,lesson.getName(),lesson.getDescription()));
+            linearLayout.addView(addNewCard(
+                    inflater,linearLayout,lesson.getName(),lesson.getDescription(), lesson.getTime1(), lesson.getTime2()));
         }
 
         return view;
@@ -67,12 +68,16 @@ public class ScheduleFragment extends Fragment {
         return null;
     }
 
-    public View addNewCard(LayoutInflater layoutInflater, ViewGroup root, String name, String description){
+    public View addNewCard(LayoutInflater layoutInflater, ViewGroup root, String name, String description, String time1, String time2){
         View card = layoutInflater.inflate(R.layout.custon_card_viwe, root,false);
-        TextView textView = (TextView) card.findViewById(R.id.card_name_IdNumber0);
-        textView.setText(name);
+        TextView textViewName = (TextView) card.findViewById(R.id.card_name_IdNumber0);
+        textViewName.setText(name);
         TextView textViewDescription = (TextView) card.findViewById(R.id.card_description_IdNumber0);
         textViewDescription.setText(description);
+        TextView textViewTime1 = (TextView) card.findViewById(R.id.card_time_1_IdNumber0);
+        textViewTime1.setText(time1);
+        TextView textViewTime2 = (TextView) card.findViewById(R.id.card_time_2_IdNumber0);
+        textViewTime2.setText(time2);
         return card;
     }
 
