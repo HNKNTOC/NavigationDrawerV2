@@ -1,4 +1,4 @@
-package com.hnkntoc.navigationdrawerv2;
+package com.hnkntoc.navigationdrawerv2.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

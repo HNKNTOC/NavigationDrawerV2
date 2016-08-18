@@ -1,4 +1,4 @@
-package com.hnkntoc.navigationdrawerv2;
+package com.hnkntoc.navigationdrawerv2.activity;
 
 
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hnkntoc.navigationdrawerv2.R;
 import com.parsingHTML.logic.ParsingHTML;
 import com.parsingHTML.logic.element.DayName;
 import com.parsingHTML.logic.extractor.xml.ExtractorSchedule;
