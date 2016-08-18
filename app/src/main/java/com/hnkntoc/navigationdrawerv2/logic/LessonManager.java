@@ -19,7 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by Nikita on 18.08.2016.
+ * Менеджер для работ с Lesson.
  */
 public class LessonManager {
 
@@ -58,7 +58,7 @@ public class LessonManager {
      * Возвращает сегодняшний день.
      * @return сегодняшний день.
      */
-    public DayName getDayName(){
+    private DayName getDayName(){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         int day = calendar.get(Calendar.DAY_OF_WEEK);
