@@ -12,18 +12,9 @@ import android.widget.LinearLayout;
 import com.hnkntoc.navigationdrawerv2.R;
 import com.hnkntoc.navigationdrawerv2.logic.CardViewFactory;
 import com.hnkntoc.navigationdrawerv2.logic.LessonManager;
-import com.parsingHTML.logic.ParsingHTML;
-import com.parsingHTML.logic.element.DayName;
-import com.parsingHTML.logic.extractor.xml.ExtractorSchedule;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
-import org.w3c.dom.Document;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 
 /**
@@ -54,7 +45,8 @@ public class ScheduleFragment extends Fragment {
 
         for (Lesson lesson : lessonList) {
             Log.i(TAG,"Add lesson "+lesson);
-            View card = factory.addNewCard(lesson.getName(), lesson.getDescription(), lesson.getTime1(), lesson.getTime2());
+            View card = factory.addNewCard(
+                    lesson.getName(), lesson.getDescription(), lesson.getTime1(), lesson.getTime2(), lesson.getNumber());
             linearLayout.addView(card);
         }
 
