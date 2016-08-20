@@ -1,6 +1,5 @@
 package com.hnkntoc.navigationdrawerv2.logic;
 
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
