@@ -26,7 +26,7 @@ public class LessonManager {
     private static final String TAG = LessonManager.class.getName();
     private InputStream inputStream1;
     private InputStream inputStream2;
-    private Document document;
+    private static Document document;
     private DayName todayDayName;
 
     public LessonManager(ScheduleFragment fragment) {
