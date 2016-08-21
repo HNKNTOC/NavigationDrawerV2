@@ -30,7 +30,8 @@ dependencies {
     compile 'com.android.support:design:24.1.1'
     compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.android.support:support-v4:24.1.1'
-    compile files('libs/ParsingHTML-3.1.0.jar')
+    /*Parsing libs*/
+    compile files('libs/ParsingHTML-3.2.0.jar')
     compile 'org.jsoup:jsoup:1.9.2'
     compile 'log4j:log4j:1.2.17'
 }
