@@ -2,9 +2,6 @@
     <string name="app_name">NavigationDrawerV2</string>
     <string name="action_autorenew">Update</string>
     <string name="action_settings">Setting</string>
-    <string name="_1_day">1 day</string>
-    <string name="_3_day">3 day</string>
-    <string name="_7_day">7 day</string>
     <string name="schedule">Schedule</string>
 
     <string name="other">Other</string>

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.hnkntoc.navigationdrawerv2.R;
+import com.parsingHTML.logic.element.DayName;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,10 +49,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingViewPager() {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new ScheduleFragment(), getString(R.string._1_day));
-        adapter.addFragment(new ScheduleFragment(), getString(R.string._3_day));
-        adapter.addFragment(new ScheduleFragment(), getString(R.string._7_day));
+        addFragment(adapter, DayName.MONDAY);
+        addFragment(adapter, DayName.TUESDAY);
+        addFragment(adapter, DayName.WEDNESDAY);
+        addFragment(adapter, DayName.THURSDAY);
+        addFragment(adapter, DayName.FRIDAY);
+        addFragment(adapter, DayName.SATURDAY);
+        addFragment(adapter, DayName.SUNDAY);
         viewPager.setAdapter(adapter);
+    }
+
+    protected void addFragment(Adapter adapter, DayName dayName) {
+        DayFragment fragment = new DayFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(DayFragment.KEY_DAY_NAME, dayName.ordinal());
+        fragment.setArguments(bundle);
+        adapter.addFragment(fragment, dayName.getNameShort());
     }
 
     private void settingTabLayout() {

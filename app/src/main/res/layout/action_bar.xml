@@ -25,18 +25,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-            <android.support.design.widget.TabItem
-                android:text="@string/_1_day"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-            <android.support.design.widget.TabItem
-                android:text="@string/_3_day"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
-            <android.support.design.widget.TabItem
-                android:text="@string/_7_day"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" />
+
         </android.support.design.widget.TabLayout>
     </android.support.design.widget.AppBarLayout>
 

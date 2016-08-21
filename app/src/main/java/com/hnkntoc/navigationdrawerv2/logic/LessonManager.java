@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import com.hnkntoc.navigationdrawerv2.R;
-import com.hnkntoc.navigationdrawerv2.activity.ScheduleFragment;
 import com.parsingHTML.logic.ParsingHTML;
 import com.parsingHTML.logic.element.DayName;
 import com.parsingHTML.logic.extractor.xml.ExtractorSchedule;
@@ -24,50 +23,36 @@ import java.util.Date;
 public class LessonManager {
 
     private static final String TAG = LessonManager.class.getName();
-    private InputStream inputStream1;
-    private InputStream inputStream2;
-    private static Document document;
-    private DayName todayDayName;
 
-    public LessonManager(ScheduleFragment fragment) {
-        Resources resources = fragment.getResources();
-        inputStream1 = resources.openRawResource(R.raw.raspbukepru);
-        inputStream2 = resources.openRawResource(R.raw.raspbukepru2);
-        updateDayName();
+
+    public static ArrayList<Lesson> getLesson(DayName dayName, Document document) {
+        Log.d(TAG, "getLesson()");
+        ExtractorSchedule extractorSchedule = new ExtractorSchedule(document);
+        return extractorSchedule.extractLessonWhitTime(dayName);
     }
 
-    private void updateDayName() {
-        todayDayName = getDayName();
-        if (todayDayName == null) {
-            Log.w(TAG, "Failed updateDayName()");
-        }
-    }
-
-    public ArrayList<Lesson> getLesson() {
-        try {
-            if (document == null) {
-                parsingXHTL();
-            }
-            ExtractorSchedule extractorSchedule = new ExtractorSchedule(document);
-            return extractorSchedule.extractLessonWhitTime(todayDayName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void parsingXHTL() throws IOException {
-        Log.i(TAG, "parsingXHTL()");
-        document = ParsingHTML.transformation(
+    public static Document parsingHTML(InputStream inputStream1, InputStream inputStream2) throws IOException {
+        Log.i(TAG, "parsingHTML()1");
+        return ParsingHTML.transformation(
                 ParsingHTML.parsingSchedule(inputStream1, inputStream2, "UTF-8"));
     }
+
+
+    public static Document parsingHTML(Resources resources) throws IOException {
+        Log.i(TAG, "parsingHTML()2");
+        return parsingHTML(
+                resources.openRawResource(R.raw.raspbukepru),
+                resources.openRawResource(R.raw.raspbukepru2));
+    }
+
 
     /**
      * Возвращает сегодняшний день.
      *
      * @return сегодняшний день.
      */
-    private DayName getDayName() {
+    private static DayName getDayName() {
+        Log.d(TAG, "getDayName()");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         int dayNumber = calendar.get(Calendar.DAY_OF_WEEK);
