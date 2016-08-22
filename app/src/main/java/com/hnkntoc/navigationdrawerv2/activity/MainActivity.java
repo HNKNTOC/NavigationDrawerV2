@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     private void selectTab(int position) {
         TabLayout.Tab tab = tabLayout.getTabAt(position);
         if (tab != null) {
-            tab.setIcon(R.drawable.error);
+            tab.setIcon(R.drawable.star);
             viewPager.setCurrentItem(position);
             Log.d(TAG, "Select tab = " + tab.getText());
             positionTabSelect = position;
