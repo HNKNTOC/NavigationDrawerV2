@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.hnkntoc.navigationdrawerv2.R;
+import com.hnkntoc.navigationdrawerv2.logic.LessonManager;
 import com.parsingHTML.logic.element.DayName;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,6 +84,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingDrawerLayout() {
         drawerLayout.addDrawerListener(new MyDrawerListener());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        int ordinal = LessonManager.getDayName().ordinal();
+        Log.i(TAG, "Set CurrentItem = " + ordinal);
+        viewPager.setCurrentItem(ordinal);
+        TabLayout.Tab tabAt = tabLayout.getTabAt(ordinal);
+        if (tabAt != null) {
+            tabAt.setIcon(R.drawable.error);
+        } else {
+            Log.w(TAG, "Failed Tab setIcon  Tab = null");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     /**

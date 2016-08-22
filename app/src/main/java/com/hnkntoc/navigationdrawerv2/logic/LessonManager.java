@@ -13,9 +13,10 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Менеджер для работ с Lesson.
@@ -26,9 +27,10 @@ public class LessonManager {
 
 
     public static ArrayList<Lesson> getLesson(DayName dayName, Document document) {
-        Log.d(TAG, "getLesson()");
         ExtractorSchedule extractorSchedule = new ExtractorSchedule(document);
-        return extractorSchedule.extractLessonWhitTime(dayName);
+        ArrayList<Lesson> lessons = extractorSchedule.extractLessonWhitTime(dayName);
+        Log.d(TAG, "getLesson() return " + lessons);
+        return lessons;
     }
 
     public static Document parsingHTML(InputStream inputStream1, InputStream inputStream2) throws IOException {
@@ -51,17 +53,13 @@ public class LessonManager {
      *
      * @return сегодняшний день.
      */
-    private static DayName getDayName() {
-        Log.d(TAG, "getDayName()");
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        int dayNumber = calendar.get(Calendar.DAY_OF_WEEK);
-        dayNumber--;
-        DayName dayName = DayName.values()[dayNumber];
+    public static DayName getDayName() {
+        String dayNameShort = new SimpleDateFormat("EE", Locale.getDefault()).format(new Date());
+        DayName dayName = DayName.valueOfNameShort(dayNameShort);
         if (dayName == null) {
-            Log.w(TAG, "getDayName return null! dayNameShort = " + dayNumber);
+            Log.w(TAG, "getDayName return null! dayNameShort = " + dayNameShort);
         }
-        Log.d(TAG, "getDayName return " + dayName);
+        Log.d(TAG, "getDayName return " + dayNameShort);
         return dayName;
     }
 }
