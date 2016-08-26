@@ -1,13 +1,14 @@
 package com.hnkntoc.navigationdrawerv2.logic;
 
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hnkntoc.navigationdrawerv2.R;
+import com.parsingHTML.logic.extractor.xml.Lesson;
 
 /**
  * Фабрика по сазданию CardView.
@@ -22,23 +23,23 @@ public class CardViewFactory {
         this.viewGroup = viewGroup;
     }
 
-    public View addNewCard(String name, String description, String time1, String time2, int lessonNumber) {
-        View card = layoutInflater.inflate(R.layout.custon_card_viwe, viewGroup,false);
+    public CardView addNewCard(Lesson lesson) {
+        CardView card = (CardView) layoutInflater.inflate(R.layout.custon_card_viwe, viewGroup, false);
 
         TextView textViewName = (TextView) card.findViewById(R.id.card_name);
-        textViewName.setText(name);
+        textViewName.setText(lesson.getName());
 
         TextView textViewDescription = (TextView) card.findViewById(R.id.card_description);
-        textViewDescription.setText(description);
+        textViewDescription.setText(lesson.getDescription());
 
         TextView textViewTime1 = (TextView) card.findViewById(R.id.card_time_1);
-        textViewTime1.setText(time1);
+        textViewTime1.setText(lesson.getTime1());
 
         TextView textViewTime2 = (TextView) card.findViewById(R.id.card_time_2);
-        textViewTime2.setText(time2);
+        textViewTime2.setText(lesson.getTime1());
 
         ImageView imageViewNumber = (ImageView) card.findViewById(R.id.card_image_number);
-        imageViewNumber.setImageResource(getImageLessonNumber(lessonNumber));
+        imageViewNumber.setImageResource(getImageLessonNumber(lesson.getNumber()));
 
         Log.d(TAG, "addNewCard return " + card);
         return card;

@@ -12,12 +12,15 @@ import android.util.Log;
 import android.view.View;
 
 import com.hnkntoc.navigationdrawerv2.R;
-import com.hnkntoc.navigationdrawerv2.logic.LessonManager;
+import com.hnkntoc.navigationdrawerv2.activity.view.ViewActivity;
+import com.hnkntoc.navigationdrawerv2.logic.LessonHelper;
+import com.hnkntoc.navigationdrawerv2.logic.Model;
 import com.parsingHTML.logic.element.DayName;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
+    private final ViewActivity viewActivity = new ViewActivity(this);
     /**
      * DrawerLayout который находится на  MainActivity.
      */
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
      * Выделяется в зависимости от дня недели.
      */
     private int positionTabSelect = -1;
+    private Model model;
 
 
     @Override
@@ -67,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(new MyDrawerListener());
         tabLayout.setupWithViewPager(viewPager);
+
+        model = Model.connect(viewActivity);
+
+
     }
 
     /**
@@ -111,11 +119,21 @@ public class MainActivity extends AppCompatActivity {
         selectTabToday();
     }
 
+    @Override
+    protected void onPause() {
+        Log.i(TAG, "onPause()");
+        if (model != null) {
+            model.disconnect(viewActivity);
+            model = null;
+        }
+        super.onPause();
+    }
+
     /**
      * Выделить Tab с сегодняшним днём.
      */
     private void selectTabToday() {
-        int ordinal = LessonManager.getDayName().ordinal();
+        int ordinal = LessonHelper.getDayName().ordinal();
         Log.i(TAG, "selectTabToday() ordinal = " + ordinal + " positionTabSelect = " + positionTabSelect);
 
         if (positionTabSelect == -1) {

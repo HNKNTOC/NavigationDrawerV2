@@ -13,17 +13,16 @@ import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * Менеджер для работ с Lesson.
  */
-public class LessonManager {
+public class LessonHelper {
 
-    private static final String TAG = LessonManager.class.getName();
+    private static final String TAG = LessonHelper.class.getName();
 
 
     public static ArrayList<Lesson> getLesson(DayName dayName, Document document) {
@@ -54,12 +53,28 @@ public class LessonManager {
      * @return сегодняшний день.
      */
     public static DayName getDayName() {
-        String dayNameShort = new SimpleDateFormat("EE", Locale.getDefault()).format(new Date());
-        DayName dayName = DayName.valueOfNameShort(dayNameShort);
-        if (dayName == null) {
-            Log.w(TAG, "getDayName return null! dayNameShort = " + dayNameShort);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        Log.w(TAG, "DAY_OF_WEEK = " + day);
+        switch (day) {
+            case 1:
+                return DayName.SUNDAY;
+            case 2:
+                return DayName.MONDAY;
+            case 3:
+                return DayName.TUESDAY;
+            case 4:
+                return DayName.WEDNESDAY;
+            case 5:
+                return DayName.THURSDAY;
+            case 6:
+                return DayName.FRIDAY;
+            case 7:
+                return DayName.SATURDAY;
+            default:
+                Log.w(TAG, "getDayName() return null! day = " + day);
+                return null;
         }
-        Log.d(TAG, "getDayName return " + dayNameShort);
-        return dayName;
     }
 }
