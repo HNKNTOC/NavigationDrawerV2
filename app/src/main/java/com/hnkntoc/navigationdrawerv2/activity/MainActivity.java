@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private DrawerLayout drawerLayout;
     /**
-     * Кнопка обновленияю.
+     * Кнопка обновления.
      */
     private FloatingActionButton fab;
     /**
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Убрать вобор с Tab.
+     * Убрать выбор с Tab.
      *
      * @param position позиция Tab.
      */
