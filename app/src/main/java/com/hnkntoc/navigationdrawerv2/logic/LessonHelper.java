@@ -26,8 +26,7 @@ public class LessonHelper {
 
 
     public static ArrayList<Lesson> getLesson(DayName dayName, Document document) {
-        ExtractorSchedule extractorSchedule = new ExtractorSchedule(document);
-        ArrayList<Lesson> lessons = extractorSchedule.extractLessonWhitTime(dayName);
+        ArrayList<Lesson> lessons = ExtractorSchedule.extractLessonWhitTime(dayName, document);
         Log.d(TAG, "getLesson() return " + lessons);
         return lessons;
     }
@@ -74,7 +73,7 @@ public class LessonHelper {
                 return DayName.SATURDAY;
             default:
                 Log.w(TAG, "getDayName() return null! day = " + day);
-                return null;
+                return DayName.MONDAY;
         }
     }
 }

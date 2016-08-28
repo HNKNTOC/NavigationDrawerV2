@@ -12,15 +12,31 @@ import android.util.Log;
 import android.view.View;
 
 import com.hnkntoc.navigationdrawerv2.R;
-import com.hnkntoc.navigationdrawerv2.activity.view.ViewActivity;
 import com.hnkntoc.navigationdrawerv2.logic.LessonHelper;
-import com.hnkntoc.navigationdrawerv2.logic.Model;
 import com.parsingHTML.logic.element.DayName;
+import com.parsingHTML.logic.extractor.xml.Lesson;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
-    private final ViewActivity viewActivity = new ViewActivity(this);
     /**
      * DrawerLayout который находится на  MainActivity.
      */
@@ -47,12 +63,12 @@ public class MainActivity extends AppCompatActivity {
      * Выделяется в зависимости от дня недели.
      */
     private int positionTabSelect = -1;
-    private Model model;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate()");
         setContentView(R.layout.activity_main);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -72,9 +88,55 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(new MyDrawerListener());
         tabLayout.setupWithViewPager(viewPager);
 
-        model = Model.connect(viewActivity);
+    }
 
+    private Document initializationDocument() {
+        Log.i(TAG, "initializationDocument()");
+        Document document = renewDocument();
+        if (document == null) {
+            try {
+                Log.i(TAG, "initializationDocument parsingHTML!");
+                document = LessonHelper.parsingHTML(getResources());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.i(TAG, "initializationDocument return " + document);
+        return document;
+    }
 
+    public Document renewDocument() {
+        Log.i(TAG, "renewDocument()");
+        try {
+            File file = new File(getFilesDir(), "Schedules.xml");
+            if (!file.exists()) {
+                Log.i(TAG, "File not exists!");
+                return null;
+            }
+            Log.i(TAG, "File path = " + file.getAbsolutePath());
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            return dBuilder.parse(file);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            Log.e(TAG, "Failed renewDocument()", e);
+        }
+        return null;
+    }
+
+    public void saveDOC(Document document) {
+        Log.i(TAG, "saveDOC()");
+        try {
+            File file = new File(getFilesDir().getAbsolutePath(), "Schedules.xml");
+            Log.i(TAG, "File path = " + file.getAbsolutePath());
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Result output = new StreamResult(file);
+            Source input = new DOMSource(document);
+
+            transformer.transform(input, output);
+        } catch (TransformerException e) {
+            Log.e(TAG, "Failed saveDOC()");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -94,19 +156,23 @@ public class MainActivity extends AppCompatActivity {
      */
     private FragmentPagerAdapter createFragmentPagerAdapter() {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        addFragment(adapter, DayName.MONDAY);
-        addFragment(adapter, DayName.TUESDAY);
-        addFragment(adapter, DayName.WEDNESDAY);
-        addFragment(adapter, DayName.THURSDAY);
-        addFragment(adapter, DayName.FRIDAY);
-        addFragment(adapter, DayName.SATURDAY);
-        addFragment(adapter, DayName.SUNDAY);
+        Document document = initializationDocument();
+        addFragment(adapter, DayName.MONDAY, document);
+        addFragment(adapter, DayName.TUESDAY, document);
+        addFragment(adapter, DayName.WEDNESDAY, document);
+        addFragment(adapter, DayName.THURSDAY, document);
+        addFragment(adapter, DayName.FRIDAY, document);
+        addFragment(adapter, DayName.SATURDAY, document);
+        addFragment(adapter, DayName.SUNDAY, document);
+        saveDOC(document);
         return adapter;
     }
 
-    protected void addFragment(Adapter adapter, DayName dayName) {
+    protected void addFragment(Adapter adapter, DayName dayName, Document document) {
         DayFragment fragment = new DayFragment();
         Bundle bundle = new Bundle();
+        ArrayList<Lesson> lesson = LessonHelper.getLesson(dayName, document);
+        bundle.putSerializable(DayFragment.KEY_LESSON, lesson);
         bundle.putInt(DayFragment.KEY_DAY_NAME, dayName.ordinal());
         fragment.setArguments(bundle);
         adapter.addFragment(fragment, dayName.getNameShort());
@@ -122,10 +188,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         Log.i(TAG, "onPause()");
-        if (model != null) {
-            model.disconnect(viewActivity);
-            model = null;
-        }
         super.onPause();
     }
 
