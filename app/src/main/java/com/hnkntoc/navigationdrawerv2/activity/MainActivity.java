@@ -1,7 +1,9 @@
 package com.hnkntoc.navigationdrawerv2.activity;
 
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -9,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.hnkntoc.navigationdrawerv2.R;
@@ -34,6 +37,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+/**
+ * Главное MainActivity.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
@@ -72,22 +78,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        setSupportActionBar(toolbar);
-        setTitle(R.string.schedule);
-
-        settingFloatingActionButton(fab);
-
         FragmentPagerAdapter adapter = createFragmentPagerAdapter();
         viewPager.setAdapter(adapter);
 
-        drawerLayout.addDrawerListener(new MyDrawerListener());
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.addDrawerListener(new MyDrawerListener());
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        settingFloatingActionButton(fab);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new MenuItemListener(navigationView, drawerLayout));
+
+        setTitle(R.string.schedule);
     }
 
     private Document initializationDocument() {
@@ -172,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         DayFragment fragment = new DayFragment();
         Bundle bundle = new Bundle();
         ArrayList<Lesson> lesson = LessonHelper.getLesson(dayName, document);
-        bundle.putSerializable(DayFragment.KEY_LESSON, lesson);
+        bundle.putSerializable(DayFragment.KEY_LESSON_LIST, lesson);
         bundle.putInt(DayFragment.KEY_DAY_NAME, dayName.ordinal());
         fragment.setArguments(bundle);
         adapter.addFragment(fragment, dayName.getNameShort());
@@ -252,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
     class MyDrawerListener implements DrawerLayout.DrawerListener {
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
-            Log.i(TAG, "onDrawerSlide");
+            Log.v(TAG, "onDrawerSlide");
         }
 
         @Override
@@ -271,4 +280,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Слушателт для Navigation Drawer меню.
+     */
+    private class MenuItemListener implements NavigationView.OnNavigationItemSelectedListener {
+
+        final NavigationView navigationView;
+        final DrawerLayout drawerLayout;
+
+        public MenuItemListener(NavigationView navigationView, DrawerLayout drawerLayout) {
+            this.navigationView = navigationView;
+            this.drawerLayout = drawerLayout;
+        }
+
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            Log.d(TAG, "onNavigationItemSelected() Item = " + item.getTitle());
+            selectItem(item);
+            return true;
+        }
+
+        private void selectItem(MenuItem item) {
+
+            item.setCheckable(true);
+            setTitle(item.getTitle());
+            drawerLayout.closeDrawers();
+        }
+    }
 }

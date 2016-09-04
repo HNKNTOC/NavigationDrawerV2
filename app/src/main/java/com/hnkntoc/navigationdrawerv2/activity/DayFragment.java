@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class DayFragment extends Fragment {
     private static final String TAG = DayFragment.class.getName();
     public static final String KEY_DAY_NAME = "KeyDayName";
-    public static final String KEY_LESSON = "KeyLesson";
+    public static final String KEY_LESSON_LIST = "KeyLessonList";
     /**
      * День который отображает DayFragment.
      */
@@ -39,17 +39,18 @@ public class DayFragment extends Fragment {
         View myFragment = inflater.inflate(R.layout.fragment_my, container, false);
         LinearLayout linearLayout = (LinearLayout) myFragment.findViewById(R.id.liner_layout);
 
+        Bundle arguments = getArguments();
         if (dayName == null) {
-            int intExtraDayName = getArguments().getInt(KEY_DAY_NAME, 0);
+            int intExtraDayName = arguments.getInt(KEY_DAY_NAME, 0);
             dayName = DayName.values()[intExtraDayName];
             Log.i(TAG, "Get DayName of Intent = " + dayName);
         }
 
         if (lessons == null) {
-            lessons = (ArrayList<Lesson>) getArguments().getSerializable(KEY_LESSON);
+            lessons = (ArrayList<Lesson>) arguments.getSerializable(KEY_LESSON_LIST);
         }
 
-        CardViewFactory cardViewFactory = new CardViewFactory(inflater, linearLayout);
+        CardViewFactory cardViewFactory = new CardViewFactory(inflater, linearLayout, getActivity());
 
         for (Lesson lesson : lessons) {
             linearLayout.addView(cardViewFactory.addNewCard(lesson));

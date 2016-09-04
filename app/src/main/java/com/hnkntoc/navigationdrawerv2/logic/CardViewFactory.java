@@ -1,13 +1,17 @@
 package com.hnkntoc.navigationdrawerv2.logic;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hnkntoc.navigationdrawerv2.R;
+import com.hnkntoc.navigationdrawerv2.activity.DescriptionActivity;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
 /**
@@ -17,10 +21,12 @@ public class CardViewFactory {
     private static final String TAG = CardViewFactory.class.getName();
     private LayoutInflater layoutInflater;
     private ViewGroup viewGroup;
+    private Activity activity;
 
-    public CardViewFactory(LayoutInflater layoutInflater, ViewGroup viewGroup) {
+    public CardViewFactory(LayoutInflater layoutInflater, ViewGroup viewGroup, Activity activity) {
         this.layoutInflater = layoutInflater;
         this.viewGroup = viewGroup;
+        this.activity = activity;
     }
 
     public CardView addNewCard(Lesson lesson) {
@@ -41,11 +47,13 @@ public class CardViewFactory {
         ImageView imageViewNumber = (ImageView) card.findViewById(R.id.card_image_number);
         imageViewNumber.setImageResource(getImageLessonNumber(lesson.getNumber()));
 
+        card.setOnClickListener(new CardViewListener(lesson));
+
         Log.d(TAG, "addNewCard return " + card);
         return card;
     }
 
-    private int getImageLessonNumber(int lessonNumber) {
+    public static int getImageLessonNumber(int lessonNumber) {
         if (lessonNumber == 1) {
             return R.drawable.lesson_number_1;
         }
@@ -77,4 +85,26 @@ public class CardViewFactory {
         return R.drawable.error;
     }
 
+    /**
+     * Обработчик нажатия на CardView.
+     * Вызывает DescriptionActivity.
+     */
+    private class CardViewListener implements View.OnClickListener {
+
+        /**
+         * Lesson для DescriptionActivity.
+         */
+        private final Lesson lesson;
+
+        public CardViewListener(Lesson lesson) {
+            this.lesson = lesson;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(activity, DescriptionActivity.class);
+            intent.putExtra(DescriptionActivity.KEY_LESSON, lesson);
+            activity.startActivity(intent);
+        }
+    }
 }

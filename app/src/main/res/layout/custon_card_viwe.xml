@@ -30,7 +30,7 @@
             android:layout_alignTop="@+id/card_image"
             android:layout_toLeftOf="@+id/card_image_number"
             android:layout_toRightOf="@+id/card_image"
-            android:text="@string/empty_string_for_test"
+            android:text="@string/big_string_for_test"
             android:textSize="20sp" />
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/card_time_1"
             android:longClickable="true"
-            android:text="@string/empty_string_for_test"
+            android:text="@string/big_string_for_test"
             android:typeface="serif" />
 
     </RelativeLayout>
