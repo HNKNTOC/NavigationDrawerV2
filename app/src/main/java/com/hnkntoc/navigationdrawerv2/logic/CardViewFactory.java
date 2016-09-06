@@ -42,7 +42,7 @@ public class CardViewFactory {
         textViewTime1.setText(lesson.getTime1());
 
         TextView textViewTime2 = (TextView) card.findViewById(R.id.card_time_2);
-        textViewTime2.setText(lesson.getTime1());
+        textViewTime2.setText(lesson.getTime2());
 
         ImageView imageViewNumber = (ImageView) card.findViewById(R.id.card_image_number);
         imageViewNumber.setImageResource(getImageLessonNumber(lesson.getNumber()));
