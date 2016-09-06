@@ -9,6 +9,7 @@ import com.parsingHTML.logic.element.DayName;
 import com.parsingHTML.logic.extractor.xml.ExtractorSchedule;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
+import org.jsoup.nodes.Element;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
@@ -26,15 +27,22 @@ public class LessonHelper {
 
 
     public static ArrayList<Lesson> getLesson(DayName dayName, Document document) {
+        Log.d(TAG, "getLesson() dayName " + dayName + " document = " + document);
         ArrayList<Lesson> lessons = ExtractorSchedule.extractLessonWhitTime(dayName, document);
         Log.d(TAG, "getLesson() return " + lessons);
         return lessons;
     }
 
-    public static Document parsingHTML(InputStream inputStream1, InputStream inputStream2) throws IOException {
-        Log.i(TAG, "parsingHTML()1");
+    public static Document parsingHTML(InputStream timeContent, InputStream scheduleContent) throws IOException {
+        Log.i(TAG, "parsingHTML()1 InputStream");
         return ParsingHTML.transformation(
-                ParsingHTML.parsingSchedule(inputStream1, inputStream2, "UTF-8"));
+                ParsingHTML.parsingSchedule(timeContent, scheduleContent, "UTF-8"));
+    }
+
+    public static Document parsingHTML(Element timeContent, Element scheduleContent) {
+        Log.i(TAG, "parsingHTML()1 Element");
+        return ParsingHTML.transformation(
+                ParsingHTML.parsingSchedule(timeContent, scheduleContent, "UTF-8"));
     }
 
 

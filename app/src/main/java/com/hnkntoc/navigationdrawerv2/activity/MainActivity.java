@@ -1,6 +1,7 @@
 package com.hnkntoc.navigationdrawerv2.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -266,17 +267,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onDrawerOpened(View drawerView) {
-            Log.i(TAG, "onDrawerOpened");
+            Log.v(TAG, "onDrawerOpened");
         }
 
         @Override
         public void onDrawerClosed(View drawerView) {
-            Log.i(TAG, "onDrawerClosed");
+            Log.v(TAG, "onDrawerClosed");
         }
 
         @Override
         public void onDrawerStateChanged(int newState) {
-            Log.i(TAG, "onDrawerStateChanged");
+            Log.v(TAG, "onDrawerStateChanged");
         }
     }
 
@@ -301,6 +302,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private void selectItem(MenuItem item) {
+
+            if (item.getItemId() == R.id.menu_item_schedule_setting) {
+                Intent intent = new Intent(MainActivity.this, ScheduleSettingActivity.class);
+                startActivity(intent);
+            }
 
             item.setCheckable(true);
             setTitle(item.getTitle());
