@@ -30,7 +30,7 @@ public class CardViewFactory {
     }
 
     public CardView addNewCard(Lesson lesson) {
-        CardView card = (CardView) layoutInflater.inflate(R.layout.custon_card_viwe, viewGroup, false);
+        CardView card = (CardView) layoutInflater.inflate(R.layout.custom_card_viwe, viewGroup, false);
 
         TextView textViewName = (TextView) card.findViewById(R.id.card_name);
         textViewName.setText(lesson.getName());
