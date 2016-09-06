@@ -305,8 +305,17 @@ public class MainActivity extends AppCompatActivity {
 
         private void selectItem(MenuItem item) {
 
-            if (item.getItemId() == R.id.menu_item_schedule_setting) {
-                Intent intent = new Intent(MainActivity.this, ScheduleSettingActivity.class);
+            Intent intent = null;
+            switch (item.getItemId()) {
+                case R.id.menu_item_schedule_setting:
+                    intent = new Intent(MainActivity.this, ScheduleSettingActivity.class);
+                    break;
+                case R.id.menu_item_setting:
+                    //intent = new Intent(MainActivity.this, SettingActivity.class);
+                    break;
+            }
+
+            if (intent != null) {
                 startActivity(intent);
             }
 

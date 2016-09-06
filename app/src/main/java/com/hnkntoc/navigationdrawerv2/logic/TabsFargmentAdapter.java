@@ -1,4 +1,4 @@
-package com.hnkntoc.navigationdrawerv2.activity;
+package com.hnkntoc.navigationdrawerv2.logic;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nikita on 10.08.2016.
+ * Адаптер для Tabs Fargment.
  */
-public class Adapter extends FragmentPagerAdapter {
+public class TabsFargmentAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public Adapter(FragmentManager manager) {
+    public TabsFargmentAdapter(FragmentManager manager) {
         super(manager);
     }
 
