@@ -1,4 +1,4 @@
-package com.hnkntoc.navigationdrawerv2.activity;
+package com.hnkntoc.navigationdrawerv2.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

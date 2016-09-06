@@ -1,4 +1,4 @@
-package com.hnkntoc.navigationdrawerv2.activity;
+package com.hnkntoc.navigationdrawerv2.view.activity;
 
 
 import android.content.Intent;
@@ -17,6 +17,8 @@ import android.view.View;
 
 import com.hnkntoc.navigationdrawerv2.R;
 import com.hnkntoc.navigationdrawerv2.logic.LessonHelper;
+import com.hnkntoc.navigationdrawerv2.logic.TabFragmentAdapter;
+import com.hnkntoc.navigationdrawerv2.view.fragment.DayFragment;
 import com.parsingHTML.logic.element.DayName;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
@@ -165,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
      * Создание и настройка FragmentPagerAdapter.
      */
     private FragmentPagerAdapter createFragmentPagerAdapter() {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
+        TabFragmentAdapter adapter = new TabFragmentAdapter(getSupportFragmentManager());
         Document document = initializationDocument();
         addFragment(adapter, DayName.MONDAY, document);
         addFragment(adapter, DayName.TUESDAY, document);
@@ -178,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         return adapter;
     }
 
-    protected void addFragment(Adapter adapter, DayName dayName, Document document) {
+    protected void addFragment(TabFragmentAdapter adapter, DayName dayName, Document document) {
         DayFragment fragment = new DayFragment();
         Bundle bundle = new Bundle();
         ArrayList<Lesson> lesson = LessonHelper.getLesson(dayName, document);

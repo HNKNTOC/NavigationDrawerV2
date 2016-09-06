@@ -1,4 +1,4 @@
-package com.hnkntoc.navigationdrawerv2.activity;
+package com.hnkntoc.navigationdrawerv2.view.activity;
 
 import android.graphics.Bitmap;
 import android.net.http.SslError;

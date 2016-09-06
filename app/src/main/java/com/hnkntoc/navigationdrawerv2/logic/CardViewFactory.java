@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hnkntoc.navigationdrawerv2.R;
-import com.hnkntoc.navigationdrawerv2.activity.DescriptionActivity;
+import com.hnkntoc.navigationdrawerv2.view.activity.DescriptionActivity;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
 /**
