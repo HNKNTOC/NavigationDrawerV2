@@ -17,28 +17,15 @@ import android.view.View;
 
 import com.hnkntoc.navigationdrawerv2.R;
 import com.hnkntoc.navigationdrawerv2.logic.LessonHelper;
+import com.hnkntoc.navigationdrawerv2.logic.SchedulesHelper;
 import com.hnkntoc.navigationdrawerv2.logic.TabFragmentAdapter;
 import com.hnkntoc.navigationdrawerv2.view.fragment.DayFragment;
 import com.parsingHTML.logic.element.DayName;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 /**
  * Главное MainActivity.
@@ -46,6 +33,7 @@ import javax.xml.transform.stream.StreamResult;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
+
     /**
      * DrawerLayout который находится на  MainActivity.
      */
@@ -72,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
      * Выделяется в зависимости от дня недели.
      */
     private int positionTabSelect = -1;
+
+    private SchedulesHelper helper = new SchedulesHelper(this);
 
 
     @Override
@@ -102,55 +92,6 @@ public class MainActivity extends AppCompatActivity {
         setTitle(R.string.schedule);
     }
 
-    private Document initializationDocument() {
-        Log.i(TAG, "initializationDocument()");
-        Document document = renewDocument();
-        if (document == null) {
-            try {
-                Log.i(TAG, "initializationDocument parsingHTML!");
-                document = LessonHelper.parsingHTML(getResources());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Log.i(TAG, "initializationDocument return " + document);
-        return document;
-    }
-
-    public Document renewDocument() {
-        Log.i(TAG, "renewDocument()");
-        try {
-            File file = new File(getFilesDir(), "Schedules.xml");
-            if (!file.exists()) {
-                Log.i(TAG, "File not exists!");
-                return null;
-            }
-            Log.i(TAG, "File path = " + file.getAbsolutePath());
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            return dBuilder.parse(file);
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            Log.e(TAG, "Failed renewDocument()", e);
-        }
-        return null;
-    }
-
-    public void saveDOC(Document document) {
-        Log.i(TAG, "saveDOC()");
-        try {
-            File file = new File(getFilesDir().getAbsolutePath(), "Schedules.xml");
-            Log.i(TAG, "File path = " + file.getAbsolutePath());
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            Result output = new StreamResult(file);
-            Source input = new DOMSource(document);
-
-            transformer.transform(input, output);
-        } catch (TransformerException e) {
-            Log.e(TAG, "Failed saveDOC()");
-            e.printStackTrace();
-        }
-    }
-
     /**
      * Настройка для FloatingActionButton.
      */
@@ -168,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private FragmentPagerAdapter createFragmentPagerAdapter() {
         TabFragmentAdapter adapter = new TabFragmentAdapter(getSupportFragmentManager());
-        Document document = initializationDocument();
+        Document document = helper.initializationDocument();
         addFragment(adapter, DayName.MONDAY, document);
         addFragment(adapter, DayName.TUESDAY, document);
         addFragment(adapter, DayName.WEDNESDAY, document);
@@ -176,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         addFragment(adapter, DayName.FRIDAY, document);
         addFragment(adapter, DayName.SATURDAY, document);
         addFragment(adapter, DayName.SUNDAY, document);
-        saveDOC(document);
+        helper.saveDOC(document);
         return adapter;
     }
 
@@ -264,22 +205,20 @@ public class MainActivity extends AppCompatActivity {
     class MyDrawerListener implements DrawerLayout.DrawerListener {
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
-            Log.v(TAG, "onDrawerSlide");
         }
 
         @Override
         public void onDrawerOpened(View drawerView) {
-            Log.v(TAG, "onDrawerOpened");
+            Log.i(TAG, "onDrawerOpened");
         }
 
         @Override
         public void onDrawerClosed(View drawerView) {
-            Log.v(TAG, "onDrawerClosed");
+            Log.i(TAG, "onDrawerClosed");
         }
 
         @Override
         public void onDrawerStateChanged(int newState) {
-            Log.v(TAG, "onDrawerStateChanged");
         }
     }
 
@@ -308,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = null;
             switch (item.getItemId()) {
                 case R.id.menu_item_schedule_setting:
-                    intent = new Intent(MainActivity.this, ScheduleSettingActivity.class);
+                    intent = new Intent(MainActivity.this, BrowserActivity.class);
                     break;
                 case R.id.menu_item_setting:
                     //intent = new Intent(MainActivity.this, SettingActivity.class);

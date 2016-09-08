@@ -34,4 +34,5 @@ dependencies {
     compile files('libs/ParsingHTML-3.4.0.jar')
     compile 'org.jsoup:jsoup:1.9.2'
     compile 'log4j:log4j:1.2.17'
+    compile 'de.mindpipe.android:android-logging-log4j:1.0.3'
 }

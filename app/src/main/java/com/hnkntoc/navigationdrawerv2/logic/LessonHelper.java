@@ -63,7 +63,7 @@ public class LessonHelper {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        Log.w(TAG, "DAY_OF_WEEK = " + day);
+        Log.d(TAG, "DAY_OF_WEEK = " + day);
         switch (day) {
             case 1:
                 return DayName.SUNDAY;
