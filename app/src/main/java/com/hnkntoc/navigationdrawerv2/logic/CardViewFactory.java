@@ -19,6 +19,11 @@ import com.parsingHTML.logic.extractor.xml.Lesson;
  */
 public class CardViewFactory {
     private static final String TAG = CardViewFactory.class.getName();
+    /**
+     * Размер для нормальной строки.
+     * Используется для контроля занимаемого места строкой..
+     */
+    private static final int lengthStringNormal = 28;
     private LayoutInflater layoutInflater;
     private ViewGroup viewGroup;
     private Activity activity;
@@ -33,7 +38,7 @@ public class CardViewFactory {
         CardView card = (CardView) layoutInflater.inflate(R.layout.custom_card_viwe, viewGroup, false);
 
         TextView textViewName = (TextView) card.findViewById(R.id.card_name);
-        textViewName.setText(lesson.getName());
+        textViewName.setText(shorteningTextLength(lesson.getName(), textViewName));
 
         TextView textViewDescription = (TextView) card.findViewById(R.id.card_description);
         textViewDescription.setText(lesson.getDescription());
@@ -51,6 +56,18 @@ public class CardViewFactory {
 
         Log.d(TAG, "addNewCard return " + card);
         return card;
+    }
+
+    /**
+     * Если длина строки превышает заданное значение обрезает текст.
+     *
+     * @param s строка.
+     */
+    public String shorteningTextLength(final String s, TextView textView) {
+        if (s.length() > lengthStringNormal) {
+            return s.substring(0, lengthStringNormal).concat("...");
+        }
+        return s;
     }
 
     public static int getImageLessonNumber(int lessonNumber) {
