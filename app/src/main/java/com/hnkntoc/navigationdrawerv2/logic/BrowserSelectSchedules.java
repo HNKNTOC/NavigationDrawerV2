@@ -116,16 +116,14 @@ public class BrowserSelectSchedules {
             Log.d(TAG, "processingHtml()");
             Document parse = Jsoup.parse(msg);
 
-            // TODO: 08.09.2016 checkSchedules должен принимать Element.
-            if (ParsingHTML.checkSchedules(msg)) {
+            if (ParsingHTML.checkSchedules(parse)) {
                 processingSchedules(parse);
             } else {
                 browserActivity.fabHide();
                 Log.d(TAG, "This is NOT Schedules!! ");
             }
 
-            // TODO: 08.09.2016 Сделать в библеотеке проверку есть ли в Element время.  
-            if (parse.select(".knock").size() > 0) {
+            if (ParsingHTML.checkSchedulesTime(parse)) {
                 processingTime(parse);
             } else {
                 Log.d(TAG, "This is NOT Time!! ");
