@@ -28,8 +28,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/card_image"
-            android:layout_toLeftOf="@+id/card_image_number"
+            android:layout_toLeftOf="@+id/card_numerator"
             android:layout_toRightOf="@+id/card_image"
+            android:linksClickable="false"
+            android:longClickable="true"
+            android:maxLength="31"
+            android:maxLines="2"
+            android:minLines="2"
             android:text="@string/big_string_for_test"
             android:textSize="20sp" />
 
@@ -50,13 +55,22 @@
             android:layout_below="@+id/card_time_1"
             android:text="@string/time2" />
 
+        <TextView
+            android:id="@+id/card_numerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/card_image_number"
+            android:text="@string/numerator"
+            android:paddingTop="3dp" />
+
         <ImageView
             android:id="@+id/card_image_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_above="@+id/card_description"
             android:src="@drawable/lesson_number_0" />
 
         <TextView
@@ -64,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentRight="true"
             android:layout_alignWithParentIfMissing="false"

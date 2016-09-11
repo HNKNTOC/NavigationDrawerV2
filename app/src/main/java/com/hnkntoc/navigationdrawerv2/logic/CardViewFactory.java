@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.hnkntoc.navigationdrawerv2.R;
 import com.hnkntoc.navigationdrawerv2.view.activity.DescriptionActivity;
+import com.parsingHTML.logic.element.NumeratorName;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
 /**
@@ -38,7 +39,7 @@ public class CardViewFactory {
         CardView card = (CardView) layoutInflater.inflate(R.layout.custom_card_viwe, viewGroup, false);
 
         TextView textViewName = (TextView) card.findViewById(R.id.card_name);
-        textViewName.setText(shorteningTextLength(lesson.getName(), textViewName));
+        textViewName.setText(formatString(lesson.getName(), lengthStringNormal));
 
         TextView textViewDescription = (TextView) card.findViewById(R.id.card_description);
         textViewDescription.setText(lesson.getDescription());
@@ -49,6 +50,9 @@ public class CardViewFactory {
         TextView textViewTime2 = (TextView) card.findViewById(R.id.card_time_2);
         textViewTime2.setText(lesson.getTime2());
 
+        TextView textViewNumerator = (TextView) card.findViewById(R.id.card_numerator);
+        textViewNumerator.setText(formatNumerator(lesson.getNumeratorName()));
+
         ImageView imageViewNumber = (ImageView) card.findViewById(R.id.card_image_number);
         imageViewNumber.setImageResource(getImageLessonNumber(lesson.getNumber()));
 
@@ -58,14 +62,20 @@ public class CardViewFactory {
         return card;
     }
 
+    private String formatNumerator(NumeratorName numeratorName) {
+        if (numeratorName == NumeratorName.EMPTY) return " ";
+        return numeratorName.getName();
+    }
+
     /**
-     * Если длина строки превышает заданное значение обрезает текст.
+     * Контролирует размер строки.
+     * Если строка большая облезает и добовляет в конец троиточие.
      *
      * @param s строка.
      */
-    public String shorteningTextLength(final String s, TextView textView) {
-        if (s.length() > lengthStringNormal) {
-            return s.substring(0, lengthStringNormal).concat("...");
+    private static String formatString(final String s, final int length) {
+        if (s.length() > length) {
+            return s.substring(0, length - 3).concat("...");
         }
         return s;
     }

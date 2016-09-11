@@ -16,4 +16,5 @@
     <string name="ok">OK</string>
     <string name="failedConnect">Failed to connect to the Internet!</string>
     <string name="schedule_save">Schedule save!</string>
+    <string name="numerator">Числ.</string>
 </resources>
