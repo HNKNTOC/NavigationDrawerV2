@@ -62,8 +62,10 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="false"
             android:layout_below="@+id/card_image_number"
-            android:text="@string/numerator"
-            android:paddingTop="3dp" />
+            android:minHeight="20dp"
+            android:minWidth="30dp"
+            android:paddingTop="3dp"
+            android:text="@string/numerator" />
 
         <ImageView
             android:id="@+id/card_image_number"
@@ -71,6 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/card_name"
+            android:minHeight="25dp"
+            android:minWidth="25dp"
             android:src="@drawable/lesson_number_0" />
 
         <TextView
