@@ -36,7 +36,7 @@ public class DayFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView()");
         // Inflate the layout for this fragment
-        View myFragment = inflater.inflate(R.layout.fragment_my, container, false);
+        View myFragment = inflater.inflate(R.layout.fragment_list_cards, container, false);
         LinearLayout linearLayout = (LinearLayout) myFragment.findViewById(R.id.liner_layout);
 
         Bundle arguments = getArguments();

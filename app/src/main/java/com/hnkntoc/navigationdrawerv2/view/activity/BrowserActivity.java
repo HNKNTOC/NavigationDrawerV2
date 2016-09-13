@@ -22,7 +22,7 @@ public class BrowserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_description);
+        setContentView(R.layout.activity_web_view);
 
         fab = (FloatingActionButton) findViewById(R.id.fab2);
         webView = (WebView) findViewById(R.id.webView);
