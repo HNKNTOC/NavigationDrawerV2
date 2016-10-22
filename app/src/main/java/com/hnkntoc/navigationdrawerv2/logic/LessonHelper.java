@@ -6,8 +6,10 @@ import android.util.Log;
 import com.hnkntoc.navigationdrawerv2.R;
 import com.parsingHTML.logic.ParsingHTML;
 import com.parsingHTML.logic.element.DayName;
+import com.parsingHTML.logic.element.NumeratorName;
 import com.parsingHTML.logic.extractor.xml.ExtractorSchedule;
 import com.parsingHTML.logic.extractor.xml.Lesson;
+import com.parsingHTML.logic.parser.exception.ExceptionParser;
 
 import org.jsoup.nodes.Element;
 import org.w3c.dom.Document;
@@ -28,21 +30,36 @@ public class LessonHelper {
 
     public static ArrayList<Lesson> getLesson(DayName dayName, Document document) {
         Log.d(TAG, "getLesson() dayName " + dayName + " document = " + document);
-        ArrayList<Lesson> lessons = ExtractorSchedule.extractLessonWhitTime(dayName, document);
+        ArrayList<Lesson> lessons = null;
+        try {
+            lessons = ExtractorSchedule.extractLessonWhitTime(dayName, NumeratorName.NUMERATOR, document);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Log.d(TAG, "getLesson() return " + lessons);
         return lessons;
     }
 
     public static Document parsingHTML(InputStream timeContent, InputStream scheduleContent) throws IOException {
         Log.i(TAG, "parsingHTML()1 InputStream");
-        return ParsingHTML.transformation(
-                ParsingHTML.parsingSchedule(timeContent, scheduleContent, "UTF-8"));
+        try {
+            return ParsingHTML.transformation(
+                    ParsingHTML.parsingSchedule(timeContent, scheduleContent, "UTF-8"));
+        } catch (ExceptionParser exceptionParser) {
+            exceptionParser.printStackTrace();
+            return null;
+        }
     }
 
     public static Document parsingHTML(Element timeContent, Element scheduleContent) {
         Log.i(TAG, "parsingHTML()1 Element");
-        return ParsingHTML.transformation(
-                ParsingHTML.parsingSchedule(timeContent, scheduleContent, "UTF-8"));
+        try {
+            return ParsingHTML.transformation(
+                    ParsingHTML.parsingSchedule(timeContent, scheduleContent, "UTF-8"));
+        } catch (ExceptionParser exceptionParser) {
+            exceptionParser.printStackTrace();
+            return null;
+        }
     }
 
 
