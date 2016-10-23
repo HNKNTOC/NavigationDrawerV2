@@ -58,7 +58,6 @@ public class CardViewFactory {
 
         card.setOnClickListener(new CardViewListener(lesson));
 
-        Log.d(TAG, "addNewCard return " + card);
         return card;
     }
 

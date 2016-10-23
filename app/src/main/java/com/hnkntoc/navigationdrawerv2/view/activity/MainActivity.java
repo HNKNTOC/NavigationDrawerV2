@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -21,11 +22,13 @@ import com.hnkntoc.navigationdrawerv2.logic.SchedulesHelper;
 import com.hnkntoc.navigationdrawerv2.logic.TabFragmentAdapter;
 import com.hnkntoc.navigationdrawerv2.view.fragment.DayFragment;
 import com.parsingHTML.logic.element.DayName;
+import com.parsingHTML.logic.element.NumeratorName;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Главное MainActivity.
@@ -60,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
      * Выделяется в зависимости от дня недели.
      */
     private int positionTabSelect = -1;
-
     private SchedulesHelper helper = new SchedulesHelper(this);
+
+    // TODO: 22.10.2016 Add description.
+    private NumeratorName numeratorToday = LessonHelper.calcNumeratorToDay();
 
 
     @Override
@@ -71,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        FragmentPagerAdapter adapter = createFragmentPagerAdapter();
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(createTabFragmentAdapter());
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -100,35 +104,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick FloatingActionButton.");
+
             }
         });
     }
 
-    /**
-     * Создание и настройка FragmentPagerAdapter.
-     */
-    private FragmentPagerAdapter createFragmentPagerAdapter() {
-        TabFragmentAdapter adapter = new TabFragmentAdapter(getSupportFragmentManager());
-        Document document = helper.initializationDocument();
-        addFragment(adapter, DayName.MONDAY, document);
-        addFragment(adapter, DayName.TUESDAY, document);
-        addFragment(adapter, DayName.WEDNESDAY, document);
-        addFragment(adapter, DayName.THURSDAY, document);
-        addFragment(adapter, DayName.FRIDAY, document);
-        addFragment(adapter, DayName.SATURDAY, document);
-        addFragment(adapter, DayName.SUNDAY, document);
-        helper.saveDOC(document);
-        return adapter;
+
+    private TabFragmentAdapter createTabFragmentAdapter() {
+        TabFragmentAdapter tabFragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager());
+        Document doc = helper.initializationDocument();
+        tabFragmentAdapter.addFragments(createDayFragments(doc));
+        helper.saveDOC(doc);
+        return tabFragmentAdapter;
     }
 
-    protected void addFragment(TabFragmentAdapter adapter, DayName dayName, Document document) {
+    private List<DayFragment> createDayFragments(Document doc) {
+        List<DayFragment> dayFragments = new ArrayList<>();
+        for (DayName dayName : DayName.values()) {
+            dayFragments.add(createDayFragment(dayName, doc));
+        }
+        Log.d(TAG, "createDayFragments return " + dayFragments);
+        return dayFragments;
+    }
+
+    private DayFragment createDayFragment(DayName dayName, Document document) {
         DayFragment fragment = new DayFragment();
         Bundle bundle = new Bundle();
-        ArrayList<Lesson> lesson = LessonHelper.getLesson(dayName, document);
+
+        ArrayList<Lesson> lesson = LessonHelper.getLesson(dayName, numeratorToday, document);
+
         bundle.putSerializable(DayFragment.KEY_LESSON_LIST, lesson);
         bundle.putInt(DayFragment.KEY_DAY_NAME, dayName.ordinal());
         fragment.setArguments(bundle);
-        adapter.addFragment(fragment, dayName.getNameShort());
+        return fragment;
     }
 
 
@@ -136,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         selectTabToday();
+        selectNumeratorToday();
     }
 
     @Override
@@ -144,11 +153,59 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_main_num:
+                Log.i(TAG, "Menu main select \"num\".");
+                numeratorToday = NumeratorName.NUMERATOR;
+                break;
+            case R.id.menu_main_den:
+                Log.i(TAG, "Menu main select \"den\".");
+                numeratorToday = NumeratorName.DENOMINATOR;
+                break;
+            case R.id.menu_main_all:
+                numeratorToday = NumeratorName.EMPTY;
+                Log.i(TAG, "Menu main select \"all\".");
+                break;
+        }
+        item.setChecked(true);
+        return true;
+    }
+
+    private void selectNumeratorToday() {
+        numeratorToday = LessonHelper.calcNumeratorToDay();
+        Log.i(TAG, "selectNumeratorToday = " + numeratorToday);
+
+
+        // TODO: 23.10.2016 Implement select numerator when start app.
+        /*if(numeratorToday == NumeratorName.NUMERATOR){
+            onOptionsItemSelected(menu.findItem(R.id.menu_main_num));
+            return;
+        }
+        if(numeratorToday == NumeratorName.DENOMINATOR){
+            onOptionsItemSelected(menu.findItem(R.id.menu_main_den));
+            return;
+        }
+        if(numeratorToday == NumeratorName.EMPTY){
+            onOptionsItemSelected(menu.findItem(R.id.menu_main_all));
+            return;
+        }*/
+
+    }
+
     /**
      * Выделить Tab с сегодняшним днём.
      */
     private void selectTabToday() {
-        int ordinal = LessonHelper.getDayName().ordinal();
+        int ordinal = LessonHelper.calcDayNameToDay().ordinal();
         Log.i(TAG, "selectTabToday() ordinal = " + ordinal + " positionTabSelect = " + positionTabSelect);
 
         if (positionTabSelect == -1) {
@@ -246,10 +303,10 @@ public class MainActivity extends AppCompatActivity {
 
             Intent intent = null;
             switch (item.getItemId()) {
-                case R.id.menu_item_schedule_setting:
+                case R.id.menu_nav_schedule_setting:
                     intent = new Intent(MainActivity.this, BrowserActivity.class);
                     break;
-                case R.id.menu_item_setting:
+                case R.id.menu_nav_setting:
                     //intent = new Intent(MainActivity.this, SettingActivity.class);
                     break;
             }

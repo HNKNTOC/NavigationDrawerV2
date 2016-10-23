@@ -17,4 +17,6 @@
     <string name="failedConnect">Failed to connect to the Internet!</string>
     <string name="schedule_save">Schedule save!</string>
     <string name="numerator">Числ.</string>
+    <string name="denominator">Знам.</string>
+    <string name="all">All</string>
 </resources>

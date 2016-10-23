@@ -15,6 +15,7 @@ import com.parsingHTML.logic.element.DayName;
 import com.parsingHTML.logic.extractor.xml.Lesson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -43,19 +44,39 @@ public class DayFragment extends Fragment {
         if (dayName == null) {
             int intExtraDayName = arguments.getInt(KEY_DAY_NAME, 0);
             dayName = DayName.values()[intExtraDayName];
-            Log.i(TAG, "Get DayName of Intent = " + dayName);
+            Log.d(TAG, "Get dayName of arguments = " + dayName.getName());
         }
 
         if (lessons == null) {
             lessons = (ArrayList<Lesson>) arguments.getSerializable(KEY_LESSON_LIST);
+            Log.d(TAG, "Get lessons of arguments = " + lessons);
         }
 
-        CardViewFactory cardViewFactory = new CardViewFactory(inflater, linearLayout, getActivity());
+        Log.i(TAG, "DayFragment = " + toString());
+        addCardView(inflater, linearLayout, lessons);
+        return myFragment;
+    }
 
+    private void addCardView(LayoutInflater inflater, LinearLayout linearLayout, List<Lesson> lessons) {
+        CardViewFactory cardViewFactory = new CardViewFactory(inflater, linearLayout, getActivity());
         for (Lesson lesson : lessons) {
             linearLayout.addView(cardViewFactory.addNewCard(lesson));
         }
+    }
 
-        return myFragment;
+    @Override
+    public void onDestroy() {
+        Log.i(TAG, "onDestroy() DayName " + dayName);
+        lessons = null;
+        dayName = null;
+        super.onDestroy();
+    }
+
+    @Override
+    public String toString() {
+        return "DayFragment{" +
+                "dayName=" + dayName +
+                ", lessons=" + lessons +
+                '}';
     }
 }

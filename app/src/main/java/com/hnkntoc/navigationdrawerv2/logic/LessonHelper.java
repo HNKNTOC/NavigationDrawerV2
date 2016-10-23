@@ -5,10 +5,13 @@ import android.util.Log;
 
 import com.hnkntoc.navigationdrawerv2.R;
 import com.parsingHTML.logic.ParsingHTML;
+import com.parsingHTML.logic.element.AttributeName;
 import com.parsingHTML.logic.element.DayName;
+import com.parsingHTML.logic.element.ElementName;
 import com.parsingHTML.logic.element.NumeratorName;
 import com.parsingHTML.logic.extractor.xml.ExtractorSchedule;
 import com.parsingHTML.logic.extractor.xml.Lesson;
+import com.parsingHTML.logic.extractor.xml.XPathBuilder;
 import com.parsingHTML.logic.parser.exception.ExceptionParser;
 
 import org.jsoup.nodes.Element;
@@ -28,11 +31,14 @@ public class LessonHelper {
     private static final String TAG = LessonHelper.class.getName();
 
 
-    public static ArrayList<Lesson> getLesson(DayName dayName, Document document) {
-        Log.d(TAG, "getLesson() dayName " + dayName + " document = " + document);
+    public static ArrayList<Lesson> getLesson(DayName dayName, NumeratorName numerator, Document document) {
+        Log.d(TAG, "getLesson() dayName " + dayName + " numerator = " + numerator + " document = " + document);
         ArrayList<Lesson> lessons = null;
+        XPathBuilder.XPathElement xPathLesson = new XPathBuilder.XPathElement(ElementName.LESSON)
+                .addAttr(AttributeName.NUMERATOR, numerator.getName())
+                .addAttr(AttributeName.NUMERATOR, NumeratorName.EMPTY.getName());
         try {
-            lessons = ExtractorSchedule.extractLessonWhitTime(dayName, NumeratorName.NUMERATOR, document);
+            lessons = ExtractorSchedule.extractLessonWhitTime(dayName, xPathLesson, document);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,8 +82,9 @@ public class LessonHelper {
      *
      * @return сегодняшний день.
      */
-    public static DayName getDayName() {
+    public static DayName calcDayNameToDay() {
         Calendar calendar = Calendar.getInstance();
+        Log.i(TAG, "calendar = " + calendar);
         calendar.setTime(new Date());
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         Log.d(TAG, "DAY_OF_WEEK = " + day);
@@ -97,8 +104,27 @@ public class LessonHelper {
             case 7:
                 return DayName.SATURDAY;
             default:
-                Log.w(TAG, "getDayName() return null! day = " + day);
+                Log.w(TAG, "calcDayNameToDay() return null! day = " + day);
                 return DayName.MONDAY;
         }
     }
+
+    /**
+     * Возвращает сегодняшний нумератор.
+     *
+     * @return сегодняшний нумератор.
+     */
+    public static NumeratorName calcNumeratorToDay() {
+        Calendar calendar = Calendar.getInstance();
+        Log.i(TAG, "calendar = " + calendar);
+        int weekOfMonth = calendar.get(Calendar.WEEK_OF_YEAR);
+        if (weekOfMonth % 2 == 0) {
+            Log.i(TAG, "calcNumeratorToDay return NUMERATOR");
+            return NumeratorName.NUMERATOR;
+        } else {
+            Log.i(TAG, "calcNumeratorToDay return DENOMINATOR");
+            return NumeratorName.DENOMINATOR;
+        }
+    }
+
 }

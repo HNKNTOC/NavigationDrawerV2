@@ -4,23 +4,23 @@
         android:id="@+id/menu_main"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_item_schedule"
+            android:id="@+id/menu_nav_schedule"
             android:icon="@drawable/ic_schedule_black_24dp"
             android:title="@string/schedule" />
         <item
-            android:id="@+id/menu_item_schedule_setting"
+            android:id="@+id/menu_nav_schedule_setting"
             android:icon="@drawable/ic_build_black_24dp"
             android:title="@string/schedule_setting" />
     </group>
 
     <group
-        android:id="@+id/menu_item_menu_other"
+        android:id="@+id/menu_nav_menu_other"
         android:title="@string/other">
         <item
-            android:id="@+id/menu_item_setting"
+            android:id="@+id/menu_nav_setting"
             android:title="@string/setting" />
         <item
-            android:id="@+id/menu_item_about_program"
+            android:id="@+id/menu_nav_about_program"
             android:title="@string/about_program" />
     </group>
 </menu>

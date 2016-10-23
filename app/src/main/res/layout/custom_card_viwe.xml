@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_IdNumber0"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:id="@+id/card_IdNumber0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +22,8 @@
             android:maxWidth="70dp"
             android:minHeight="70dp"
             android:minWidth="80dp"
-            android:src="@drawable/geometry" />
+            android:src="@drawable/geometry"
+            android:cropToPadding="false"/>
 
         <TextView
             android:id="@+id/card_name"
@@ -76,7 +78,7 @@
             android:layout_toRightOf="@+id/card_name"
             android:minHeight="25dp"
             android:minWidth="25dp"
-            android:src="@drawable/lesson_number_0" />
+            app:srcCompat="@drawable/lesson_number_0"/>
 
         <TextView
             android:id="@+id/card_description"
