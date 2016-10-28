@@ -34,9 +34,11 @@ public class LessonHelper {
     public static ArrayList<Lesson> getLesson(DayName dayName, NumeratorName numerator, Document document) {
         Log.d(TAG, "getLesson() dayName " + dayName + " numerator = " + numerator + " document = " + document);
         ArrayList<Lesson> lessons = null;
-        XPathBuilder.XPathElement xPathLesson = new XPathBuilder.XPathElement(ElementName.LESSON)
-                .addAttr(AttributeName.NUMERATOR, numerator.getName())
-                .addAttr(AttributeName.NUMERATOR, NumeratorName.EMPTY.getName());
+        XPathBuilder.XPathElement xPathLesson = new XPathBuilder.XPathElement(ElementName.LESSON);
+        if (numerator != NumeratorName.EMPTY) {
+            xPathLesson.addAttr(AttributeName.NUMERATOR, numerator.getName());
+            xPathLesson.addAttr(AttributeName.NUMERATOR, NumeratorName.EMPTY.getName());
+        }
         try {
             lessons = ExtractorSchedule.extractLessonWhitTime(dayName, xPathLesson, document);
         } catch (Exception e) {
