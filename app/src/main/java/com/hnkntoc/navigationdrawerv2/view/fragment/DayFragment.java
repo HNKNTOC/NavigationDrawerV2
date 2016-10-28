@@ -2,6 +2,7 @@ package com.hnkntoc.navigationdrawerv2.view.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,17 +31,26 @@ public class DayFragment extends Fragment {
      */
     private DayName dayName;
     private ArrayList<Lesson> lessons;
+    private LinearLayout linearLayout;
+    private LayoutInflater inflater;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.i(TAG, "onCreateView()");
         // Inflate the layout for this fragment
-        View myFragment = inflater.inflate(R.layout.fragment_list_cards, container, false);
-        LinearLayout linearLayout = (LinearLayout) myFragment.findViewById(R.id.liner_layout);
+
+        this.inflater = inflater;
+        View myFragment = this.inflater.inflate(R.layout.fragment_list_cards, container, false);
+        linearLayout = (LinearLayout) myFragment.findViewById(R.id.liner_layout);
 
         Bundle arguments = getArguments();
+
         if (dayName == null) {
             int intExtraDayName = arguments.getInt(KEY_DAY_NAME, 0);
             dayName = DayName.values()[intExtraDayName];
@@ -58,25 +68,63 @@ public class DayFragment extends Fragment {
     }
 
     private void addCardView(LayoutInflater inflater, LinearLayout linearLayout, List<Lesson> lessons) {
+        Log.d(TAG, "addCardView() " + dayName.getNameShort());
         CardViewFactory cardViewFactory = new CardViewFactory(inflater, linearLayout, getActivity());
         for (Lesson lesson : lessons) {
+            Log.d(TAG, "add lesson" + lesson);
             linearLayout.addView(cardViewFactory.addNewCard(lesson));
+        }
+    }
+
+    public DayName getDayName() {
+        return dayName;
+    }
+
+    public void update(ArrayList<Lesson> lessons) {
+        this.lessons = lessons;
+        if (linearLayout != null && inflater != null) {
+            linearLayout.removeAllViews();
+            addCardView(inflater, linearLayout, lessons);
+            Log.d(TAG, "update() " + toString());
+        } else {
+            Log.d(TAG, "update() failed " + toString());
         }
     }
 
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy() DayName " + dayName);
-        lessons = null;
-        dayName = null;
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onPause() {
+        Log.i(TAG, "onStop()" + toString());
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        Log.i(TAG, "onStop()" + toString());
+        super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.i(TAG, "onSaveInstanceState()");
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DayFragment.KEY_LESSON_LIST, lessons);
+        bundle.putInt(DayFragment.KEY_DAY_NAME, dayName.ordinal());
+        outState.putAll(bundle);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public String toString() {
         return "DayFragment{" +
-                "dayName=" + dayName +
-                ", lessons=" + lessons +
+                "dayName=" + dayName.getNameShort() +
                 '}';
     }
 }

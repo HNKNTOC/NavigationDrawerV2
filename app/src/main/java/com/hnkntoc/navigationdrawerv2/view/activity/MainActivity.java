@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: 22.10.2016 Add description.
     private NumeratorName numeratorToday = LessonHelper.calcNumeratorToDay();
+    private TabFragmentAdapter tabFragmentAdapter;
 
 
     @Override
@@ -76,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(createTabFragmentAdapter());
+        tabFragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tabFragmentAdapter);
+        updateFragmentAdapter();
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -104,18 +107,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick FloatingActionButton.");
-
             }
         });
     }
 
+    private void updateLesson() {
+        updateFragmentAdapter();
+        positionTabSelect = -1;
+        selectTabToday();
+    }
 
-    private TabFragmentAdapter createTabFragmentAdapter() {
-        TabFragmentAdapter tabFragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager());
+    private void updateFragmentAdapter() {
         Document doc = helper.initializationDocument();
-        tabFragmentAdapter.addFragments(createDayFragments(doc));
+        int count = tabFragmentAdapter.getCount();
+        ArrayList<ArrayList<Lesson>> arrayLists = new ArrayList<ArrayList<Lesson>>(count);
+        for (int i = 0; i < count; i++) {
+            ArrayList<Lesson> lessons = LessonHelper.getLesson(DayName.values()[i], numeratorToday, doc);
+            arrayLists.add(lessons);
+        }
+        tabFragmentAdapter.updateLesson(arrayLists);
         helper.saveDOC(doc);
-        return tabFragmentAdapter;
     }
 
     private List<DayFragment> createDayFragments(Document doc) {
@@ -175,8 +186,12 @@ public class MainActivity extends AppCompatActivity {
                 numeratorToday = NumeratorName.EMPTY;
                 Log.i(TAG, "Menu main select \"all\".");
                 break;
+            default:
+                Log.w(TAG, "Failed onOptionsItemSelected item = " + item);
+                return false;
         }
         item.setChecked(true);
+        updateLesson();
         return true;
     }
 
