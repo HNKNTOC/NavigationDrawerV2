@@ -20,15 +20,21 @@ import java.util.ArrayList;
 public class TabFragmentAdapter extends FragmentPagerAdapter {
     private static final String TAG = TabFragmentAdapter.class.getName();
     private ArrayList<ArrayList<Lesson>> arrayLists;
+    private final ArrayList<DayFragment> dayFragments = new ArrayList<>();
 
-    public TabFragmentAdapter(FragmentManager manager) {
+    public TabFragmentAdapter(FragmentManager manager, ArrayList<ArrayList<Lesson>> arrayLists) {
         super(manager);
+        this.arrayLists = arrayLists;
+        for (int i = 0; i < DayName.values().length; i++) {
+            DayFragment day = createDay(i);
+            dayFragments.add(day);
+        }
     }
 
     @Override
     public Fragment getItem(int position) {
         Log.d(TAG, "getItem position = " + position);
-        return createDay(position);
+        return dayFragments.get(position);
     }
 
     @NonNull
@@ -40,16 +46,6 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
         Log.d(TAG, "getItem bundle = " + bundle);
         newDay.setArguments(bundle);
         return newDay;
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        DayFragment dayFragment = (DayFragment) object;
-        Log.d(TAG, "getItemPosition dayFragment = " + dayFragment);
-        int ordinal = dayFragment.getDayName().ordinal();
-        ArrayList<Lesson> lessons = arrayLists.get(ordinal);
-        dayFragment.update(lessons);
-        return dayFragment.getDayName().ordinal();
     }
 
     @Override
@@ -65,11 +61,14 @@ public class TabFragmentAdapter extends FragmentPagerAdapter {
 
     public void updateLesson(ArrayList<ArrayList<Lesson>> arrayLists) {
         Log.d(TAG, "updateLesson()");
-        for (int i = 0; i < arrayLists.size(); i++) {
-            Log.d(TAG, "i = " + i + " " + arrayLists.get(i));
-            arrayLists.get(i);
-        }
         this.arrayLists = arrayLists;
+        updateAllLesson(arrayLists);
         notifyDataSetChanged();
+    }
+
+    private void updateAllLesson(ArrayList<ArrayList<Lesson>> arrayLists) {
+        for (int i = 0; i < dayFragments.size(); i++) {
+            dayFragments.get(i).update(arrayLists.get(i));
+        }
     }
 }

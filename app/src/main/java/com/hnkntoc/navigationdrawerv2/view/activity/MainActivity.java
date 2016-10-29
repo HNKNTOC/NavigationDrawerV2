@@ -3,6 +3,7 @@ package com.hnkntoc.navigationdrawerv2.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        tabFragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager());
+        tabFragmentAdapter = new TabFragmentAdapter(getSupportFragmentManager(), createArrayLesson());
         viewPager.setAdapter(tabFragmentAdapter);
         updateFragmentAdapter();
 
@@ -118,15 +119,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateFragmentAdapter() {
+        tabFragmentAdapter.updateLesson(createArrayLesson());
+    }
+
+    @NonNull
+    private ArrayList<ArrayList<Lesson>> createArrayLesson() {
         Document doc = helper.initializationDocument();
-        int count = tabFragmentAdapter.getCount();
-        ArrayList<ArrayList<Lesson>> arrayLists = new ArrayList<ArrayList<Lesson>>(count);
-        for (int i = 0; i < count; i++) {
+        int length = DayName.values().length;
+        ArrayList<ArrayList<Lesson>> arrayLists = new ArrayList<ArrayList<Lesson>>(length);
+        for (int i = 0; i < length; i++) {
             ArrayList<Lesson> lessons = LessonHelper.getLesson(DayName.values()[i], numeratorToday, doc);
             arrayLists.add(lessons);
         }
-        tabFragmentAdapter.updateLesson(arrayLists);
         helper.saveDOC(doc);
+        return arrayLists;
     }
 
     private List<DayFragment> createDayFragments(Document doc) {

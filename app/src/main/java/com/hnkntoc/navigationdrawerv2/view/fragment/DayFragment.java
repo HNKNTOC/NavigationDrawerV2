@@ -124,7 +124,7 @@ public class DayFragment extends Fragment {
     @Override
     public String toString() {
         return "DayFragment{" +
-                "dayName=" + dayName.getNameShort() +
+                "dayName=" + dayName +
                 '}';
     }
 }
