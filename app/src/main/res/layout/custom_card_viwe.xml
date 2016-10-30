@@ -37,7 +37,7 @@
             android:maxLength="31"
             android:maxLines="2"
             android:minLines="2"
-            android:text="@string/big_string_for_test"
+            android:text="@string/for_test_big_string"
             android:textSize="20sp" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_alignLeft="@+id/card_name"
             android:layout_below="@+id/card_name"
 
-            android:text="@string/time1" />
+            android:text="@string/for_test_time1"/>
 
         <TextView
             android:id="@+id/card_time_2"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/card_time_1"
             android:layout_below="@+id/card_time_1"
-            android:text="@string/time2" />
+            android:text="@string/for_test_time2"/>
 
         <TextView
             android:id="@+id/card_numerator"
@@ -94,7 +94,7 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/card_time_1"
             android:longClickable="true"
-            android:text="@string/big_string_for_test"
+            android:text="@string/for_test_big_string"
             android:typeface="serif" />
 
     </RelativeLayout>

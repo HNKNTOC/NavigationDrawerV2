@@ -40,6 +40,9 @@ public class DescriptionActivity extends AppCompatActivity {
         TextView textViewLessonDescription = (TextView) findViewById(R.id.desc_description);
         textViewLessonDescription.setText(lesson.getDescription());
 
+        TextView textViewNameTeachers = (TextView) findViewById(R.id.desc_name_teachers);
+        textViewNameTeachers.setText(lesson.getTeacherNames());
+
         ImageView imageViewLessonNumber = (ImageView) findViewById(R.id.desc_image_number);
         imageViewLessonNumber.setImageResource(CardViewFactory.getImageLessonNumber(lesson.getNumber()));
     }
