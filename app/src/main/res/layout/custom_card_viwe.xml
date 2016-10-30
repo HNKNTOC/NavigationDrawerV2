@@ -38,7 +38,9 @@
             android:maxLines="2"
             android:minLines="2"
             android:text="@string/for_test_big_string"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="normal|bold"
+            android:textAllCaps="false"/>
 
         <TextView
             android:id="@+id/card_time_1"
@@ -67,7 +69,9 @@
             android:minHeight="20dp"
             android:minWidth="30dp"
             android:paddingTop="3dp"
-            android:text="@string/numerator" />
+            android:text="@string/numerator"
+            android:textSize="14sp"
+            />
 
         <ImageView
             android:id="@+id/card_image_number"
