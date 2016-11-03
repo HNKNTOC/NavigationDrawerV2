@@ -77,6 +77,7 @@ public class DescriptionActivity extends AppCompatActivity {
 
         calendar.add(Calendar.HOUR_OF_DAY, calendarThis.get(Calendar.HOUR_OF_DAY) * -1);
         calendar.add(Calendar.MINUTE, calendarThis.get(Calendar.MINUTE) * -1);
+        calendar.add(Calendar.SECOND, calendarThis.get(Calendar.SECOND) * -1);
 
         int sec = calendar.get(Calendar.HOUR_OF_DAY) * 3600000 + calendar.get(Calendar.MINUTE) * 60000;
 
