@@ -113,10 +113,12 @@ public class DayFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         Log.i(TAG, "onSaveInstanceState()");
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(DayFragment.KEY_LESSON_LIST, lessons);
-        bundle.putInt(DayFragment.KEY_DAY_NAME, dayName.ordinal());
-        outState.putAll(bundle);
+        if (dayName != null && lessons != null) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(DayFragment.KEY_LESSON_LIST, lessons);
+            bundle.putInt(DayFragment.KEY_DAY_NAME, dayName.ordinal());
+            outState.putAll(bundle);
+        }
 
         super.onSaveInstanceState(outState);
     }
